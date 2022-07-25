@@ -75,7 +75,7 @@ def get_newer_on_local(local_path):
                 print("file on local ", local["mtime"],
                       "is newer file in DB", server_files[x]["mtime"])
                 newer_on_local.append(local)
-            elif local["time"] == server_files[x]["mtime"]:
+            elif local["mtime"] == server_files[x]["mtime"]:
                 print(local["filename"], "Is up to Date")
             else:
                 print("file on local ", local["mtime"],
