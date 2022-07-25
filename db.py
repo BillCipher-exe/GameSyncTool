@@ -2,13 +2,16 @@ import mysql.connector
 from datetime import datetime
 import os
 import support
+import configparser
 
+config = configparser.ConfigParser()
+config.read("config.ini")
 
 mydb = mysql.connector.connect(
-    host="remotemysql.com",
-    user="cFt9g9Qee7",
-    password="KKgyM4qdL4",
-    database="cFt9g9Qee7"
+    host=config["database"]["host"],
+    user=config["database"]["user"],
+    password=config["database"]["password"],
+    database=config["database"]["db"]
 )
 mycursor = mydb.cursor(dictionary=True, buffered=True)
 

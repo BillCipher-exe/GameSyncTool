@@ -1,0 +1,7 @@
+CREATE TABLE retroarch (
+    id INT NOT NULL AUTO_INCREMENT,
+    filename VARCHAR(255),
+    mtime DATETIME,
+    file LONGBLOB,
+    PRIMARY KEY (id)
+);
