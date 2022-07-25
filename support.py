@@ -11,7 +11,7 @@ def files(mypath):
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
     for i in onlyfiles:
         date_t = get_mtime(join(mypath, i))
-        entry = {"filename": i, "time": date_t}
+        entry = {"filename": i, "mtime": date_t}
         items.append(entry)
     return items
 
@@ -37,22 +37,22 @@ def get_newer_on_server(local_path):
     for server in server_files:
         found = False
         for x in range(len(local_files)):
-            if server["Filename"] == local_files[x]["filename"]:
+            if server["filename"] == local_files[x]["filename"]:
                 found = True
                 break
         if(found == True):
-            #print(server["Filename"], "found localy")
-            if server["SaveTime"] > local_files[x]["time"]:
-                print("file in DB ", server["SaveTime"],
-                      "is newer than Local file Time", local_files[x]["time"])
+            #print(server["filename"], "found localy")
+            if server["mtime"] > local_files[x]["mtime"]:
+                print("file in DB ", server["mtime"],
+                      "is newer than Local file Time", local_files[x]["mtime"])
                 newer_on_server.append(server)
-            elif server["SaveTime"] == local_files[x]["time"]:
-                print(server["Filename"], " Is up to Date")
+            elif server["mtime"] == local_files[x]["mtime"]:
+                print(server["filename"], " Is up to Date")
             else:
-                print("file in DB ", server["SaveTime"],
-                      "is older than Local file Time", local_files[x]["time"])
+                print("file in DB ", server["mtime"],
+                      "is older than Local file Time", local_files[x]["mtime"])
         else:
-            print(server["Filename"], "not found localy")
+            print(server["filename"], "not found localy")
             newer_on_server.append(server)
     print("files newer in DB: ", newer_on_server)
     return newer_on_server
@@ -66,20 +66,20 @@ def get_newer_on_local(local_path):
     for local in local_files:
         found = False
         for x in range(len(server_files)):
-            if local["filename"] == server_files[x]["Filename"]:
+            if local["filename"] == server_files[x]["filename"]:
                 found = True
                 break
         if(found == True):
             #print(local["filename"], "found on server")
-            if local["time"] > server_files[x]["SaveTime"]:
-                print("file on local ", local["time"],
-                      "is newer file in DB", server_files[x]["SaveTime"])
+            if local["mtime"] > server_files[x]["mtime"]:
+                print("file on local ", local["mtime"],
+                      "is newer file in DB", server_files[x]["mtime"])
                 newer_on_local.append(local)
-            elif local["time"] == server_files[x]["SaveTime"]:
+            elif local["time"] == server_files[x]["mtime"]:
                 print(local["filename"], "Is up to Date")
             else:
-                print("file on local ", local["time"],
-                      "is older than file DB", server_files[x]["SaveTime"])
+                print("file on local ", local["mtime"],
+                      "is older than file DB", server_files[x]["mtime"])
         else:
             print(local["filename"], "not found on Server")
             newer_on_local.append(local)

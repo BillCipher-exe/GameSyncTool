@@ -14,7 +14,7 @@ mycursor = mydb.cursor(dictionary=True, buffered=True)
 
 
 def check_entry_exist(filename):
-    sql = "SELECT filename FROM Retroarch WHERE filename=%s"
+    sql = "SELECT filename FROM retroarch WHERE filename=%s"
     val = (filename,)
     mycursor.execute(sql, val)
     myresult = mycursor.fetchone()
@@ -25,33 +25,33 @@ def check_entry_exist(filename):
 
 
 # upload file to DB
-def put_file_db(path, filename, time):
+def put_file_db(path, filename, mtime):
     path = os.path.join(path, filename)
     print(filename, " Uploaded to DB")
     file = open(path, "rb").read()
     if check_entry_exist(filename):
-        sql = "Update Retroarch SET SaveTime = %s , File = %s WHERE Retroarch.Filename = %s"
-        val = (time, file, filename)
+        sql = "Update retroarch SET mtime = %s , file = %s WHERE filename = %s"
+        val = (mtime, file, filename)
     else:
-        sql = "INSERT INTO Retroarch(Filename,SaveTime,File) VALUES(%s,%s,%s)"
-        val = (filename, time, file)
+        sql = "INSERT INTO retroarch(filename,mtime,file) VALUES(%s,%s,%s)"
+        val = (filename, mtime, file)
     mycursor.execute(sql, val)
     mydb.commit()
 
 
 def get_file_db(path, id):
-    sql = "SELECT Filename, SaveTime, File FROM Retroarch WHERE ID = %s"
+    sql = "SELECT filename, mtime, file FROM retroarch WHERE id = %s"
     val = (id,)
     mycursor.execute(sql, val)
     myresult = mycursor.fetchone()
-    path = os.path.join(path, myresult["Filename"])
+    path = os.path.join(path, myresult["filename"])
     file = open(path, "wb")
-    file.write(myresult["File"])
-    support.set_file_last_modified(path, myresult["SaveTime"])
-    print(myresult["Filename"], "Downloaded from DB")
+    file.write(myresult["file"])
+    support.set_file_last_modified(path, myresult["mtime"])
+    print(myresult["filename"], "Downloaded from DB")
 
 
 def get_info_db():
-    sql = "SELECT ID, Filename, SaveTime FROM Retroarch"
+    sql = "SELECT id, filename, mtime FROM retroarch"
     mycursor.execute(sql)
     return mycursor.fetchall()
