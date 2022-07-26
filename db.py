@@ -32,7 +32,6 @@ def put_file_db(path, filename, mtime):
     path = os.path.join(path, filename)
     print(filename, " Uploaded to DB")
     file = open(path, "rb").read()
-    file.close()
     if check_entry_exist(filename):
         sql = "Update retroarch SET mtime = %s , file = %s WHERE filename = %s"
         val = (mtime, file, filename)
