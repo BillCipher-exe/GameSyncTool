@@ -32,6 +32,7 @@ def put_file_db(path, filename, mtime):
     path = os.path.join(path, filename)
     print(filename, " Uploaded to DB")
     file = open(path, "rb").read()
+    file.close()
     if check_entry_exist(filename):
         sql = "Update retroarch SET mtime = %s , file = %s WHERE filename = %s"
         val = (mtime, file, filename)
@@ -50,6 +51,7 @@ def get_file_db(path, id):
     path = os.path.join(path, myresult["filename"])
     file = open(path, "wb")
     file.write(myresult["file"])
+    file.close()
     support.set_file_last_modified(path, myresult["mtime"])
     print(myresult["filename"], "Downloaded from DB","| with mtime: ",myresult["mtime"])
 
