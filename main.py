@@ -18,4 +18,4 @@ def sync_retroarch(path):
 
 sync_retroarch(config["path"]["retroarch_saves"])
 
-#input("Press enter to exit ;)")
+input("Press enter to exit")
