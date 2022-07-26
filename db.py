@@ -51,7 +51,7 @@ def get_file_db(path, id):
     file = open(path, "wb")
     file.write(myresult["file"])
     support.set_file_last_modified(path, myresult["mtime"])
-    print(myresult["filename"], "Downloaded from DB")
+    print(myresult["filename"], "Downloaded from DB","| with mtime: ",myresult["mtime"])
 
 
 def get_info_db():
