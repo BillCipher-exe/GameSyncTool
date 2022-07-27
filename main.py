@@ -7,8 +7,8 @@ config.read("config.ini")
 
 retroarch = db.Retroarch(config["database"],config["path"]["retroarch_saves"])
 
-def sync_retroarch(path):
-    local_files = support.files(path)
+def sync_retroarch():
+    local_files = support.files(retroarch.save_path)
     server_files = retroarch.get_info_db()
 
     outdated_local = support.list_of_outdated_saves(local_files,server_files)
@@ -20,4 +20,4 @@ def sync_retroarch(path):
         retroarch.put_file_db(x["filename"], x["mtime"])
 
 
-sync_retroarch(config["path"]["retroarch_saves"])
+sync_retroarch()
