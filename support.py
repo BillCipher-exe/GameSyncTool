@@ -2,7 +2,7 @@ from os import listdir
 from os.path import isfile, join
 from datetime import datetime
 import os
-import db
+
 
 
 # get list of local_Savegames at path
@@ -52,5 +52,5 @@ def list_of_outdated_saves(source1, source2):
         else:
             print(_source2["filename"], " savegame not found in Source 1")
             outdated.append(_source2)
-    print("outdatet savegames in source 1: ", outdated)
+    #print("outdatet savegames in source 1: ", outdated)
     return outdated
