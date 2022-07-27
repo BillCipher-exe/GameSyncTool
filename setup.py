@@ -9,6 +9,7 @@ def install(package):
         subprocess.check_call([sys.executable, "-m", "pip", "install", package])
     except:
         print("ERROR: Could not install Python Package. Check if pip3 is installed")
+        sys.exit(1)
 install("mysql-connector-python")
 
 config = configparser.ConfigParser()
@@ -30,7 +31,7 @@ try:
     config_file.close()
 except:
     print("ERROR: could not write config file")
-
+    sys.exit(1)
 try:
     mydb = mysql.connector.connect(
         host=config["database"]["host"],
@@ -48,6 +49,8 @@ try:
         print("----------------------------------------------------------------------")
     except:
         print("ERROR: could not create Table")
+        sys.exit(1)
 except:
     print("ERROR: no connection to MySQL DB")
+    sys.exit(1)
 
