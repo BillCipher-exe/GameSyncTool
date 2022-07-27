@@ -4,16 +4,19 @@ import support
 
 
 class DB:
-    def __init__(self, mysql_config, path):
-        self.mysql_config = mysql_config
-        self.save_path = path
-        self.mydb = mysql.connector.connect(
-            host=mysql_config["host"],
-            user=mysql_config["user"],
-            password=mysql_config["password"],
-            database=mysql_config["db"]
-        )
-        self.mycursor = self.mydb.cursor(dictionary=True, buffered=True)
+    try:
+        def __init__(self, mysql_config, path):
+            self.mysql_config = mysql_config
+            self.save_path = path
+            self.mydb = mysql.connector.connect(
+                host=mysql_config["host"],
+                user=mysql_config["user"],
+                password=mysql_config["password"],
+                database=mysql_config["db"]
+            )
+            self.mycursor = self.mydb.cursor(dictionary=True, buffered=True)
+    except:
+        print("ERROR connection to DB check your details")
 
 
 class Retroarch(DB):
@@ -58,3 +61,4 @@ class Retroarch(DB):
         sql = "SELECT id, filename, mtime FROM retroarch"
         self.mycursor.execute(sql)
         return self.mycursor.fetchall()
+        
