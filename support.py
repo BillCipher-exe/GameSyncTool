@@ -15,6 +15,16 @@ def files(mypath):
         items.append(entry)
     return items
 
+#level = min depth of the folder from root ; path_list = list where the paths get saved
+def listdirs(rootdir, level,path_list=[]):
+    level-=1
+    for it in os.scandir(rootdir):
+        if it.is_dir() and level!=0:
+             listdirs(it, level, path_list)
+        elif it.is_dir():
+            print(it.path)
+            path_list.append(it.path)
+    return path_list
 
 #set mtime 
 def set_file_last_modified(file_path, time):
