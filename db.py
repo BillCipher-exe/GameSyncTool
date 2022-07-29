@@ -1,11 +1,13 @@
 import mysql.connector
 import os
 import support
+import sys
 
 
 class DB:
-    try:
-        def __init__(self, mysql_config, path):
+    
+    def __init__(self, mysql_config, path):
+        try:
             self.mysql_config = mysql_config
             self.save_path = path
             self.mydb = mysql.connector.connect(
@@ -15,8 +17,9 @@ class DB:
                 database=mysql_config["db"]
             )
             self.mycursor = self.mydb.cursor(dictionary=True, buffered=True)
-    except:
-        print("ERROR connection to DB check your details")
+        except:
+            print("ERROR: no connection to the MySQL DB. check your details")
+            sys.exit(1)
 
 
 class Retroarch(DB):

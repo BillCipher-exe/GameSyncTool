@@ -22,7 +22,7 @@ def listdirs(rootdir, level,path_list=[]):
         if it.is_dir() and level!=0:
              listdirs(it, level, path_list)
         elif it.is_dir():
-            print(it.path)
+            #print(it.path)
             path_list.append(it.path)
     return path_list
 
