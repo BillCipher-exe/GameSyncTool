@@ -1,5 +1,3 @@
-from re import sub
-import support
 import db
 import configparser
 
