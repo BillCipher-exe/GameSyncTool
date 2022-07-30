@@ -5,7 +5,7 @@ import os
 
 
 
-# get list of local_Savegames at path
+# get list ot file_path without subfolder
 def files(mypath):
     items = []
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
@@ -15,16 +15,28 @@ def files(mypath):
         items.append(entry)
     return items
 
-#level = min depth of the folder from root ; path_list = list where the paths get saved
-def listdirs(rootdir, level,path_list=[]):
-    level-=1
+#get list of file_path with subfolder
+def get_path_list(rootdir, path_list=[]):
     for it in os.scandir(rootdir):
-        if it.is_dir() and level!=0:
-             listdirs(it, level, path_list)
-        elif it.is_dir():
-            print(it.path)
+        if it.is_dir():
+             get_path_list(it, path_list)
+        elif it.is_file():
             path_list.append(it.path)
     return path_list
+
+#get dict {filename, mtime, subfolder} of all files from rootdir with subfolder
+def get_files(rootdir):
+    rootdir = rootdir.replace("\\",'/')
+    file_list = get_path_list(rootdir)
+    files = []
+    for path in file_list:
+        path =  path.replace("\\",'/')
+        filename = os.path.basename(path)
+        subfolder = path.replace(rootdir,"")
+        subfolder = subfolder.replace(filename,"")
+        _dict = {"filename":filename,"mtime":get_mtime(path),"subfolder":subfolder}
+        files.append(_dict)
+    return files
 
 #set mtime 
 def set_file_last_modified(file_path, time):
