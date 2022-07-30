@@ -45,12 +45,16 @@ class DB:
         self.mycursor.execute(sql, val)
         self.mydb.commit()
 
-    def get_file_db(self, id):
-        sql = "SELECT filename, mtime, file, subfolder FROM " + self.table + " WHERE id = %s"
-        val = (id,)
+    def get_file_db(self, id, subfolder):
+        sql = "SELECT filename, mtime, file, subfolder FROM " + self.table + " WHERE id = %s AND subfolder = %s"
+        val = (id,subfolder)
         self.mycursor.execute(sql, val)
         myresult = self.mycursor.fetchone()
         path = self.save_path + myresult["subfolder"] + myresult["filename"]
+        #os.makedirs("/mnt/c/Users/hakan/Desktop/Programming/test/Retroarch/New folder/New folder")
+        #print("!!!!!!!!!!!!-----------"+self.save_path + myresult["subfolder"])
+        if not os.path.isdir(self.save_path + myresult["subfolder"]):
+            os.makedirs(self.save_path + myresult["subfolder"])
         file = open(path, "wb")
         file.write(myresult["file"])
         file.close()
@@ -71,9 +75,9 @@ class Retroarch(DB):
 
         outdated_local = support.list_of_outdated_saves(local_files,server_files)
         for x in outdated_local:
-            self.get_file_db(x["id"])
+            self.get_file_db(x["id"], x["subfolder"])
         
         outdated_server = support.list_of_outdated_saves(server_files,local_files)
         for x in outdated_server:
-            super().put_file_db(x["filename"], x["mtime"], x["subfolder"])
+            self.put_file_db(x["filename"], x["mtime"], x["subfolder"])
         
