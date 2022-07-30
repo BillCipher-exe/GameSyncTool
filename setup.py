@@ -3,6 +3,8 @@ import subprocess
 import sys
 import configparser
 
+from pip import main
+
 
 def install(package):
     try:
@@ -41,8 +43,10 @@ try:
     )
     try:
         mycursor = mydb.cursor(dictionary=True, buffered=True)
-        sql = "CREATE TABLE IF NOT EXISTS retroarch (id INT NOT NULL AUTO_INCREMENT,filename VARCHAR(255), mtime DATETIME, file LONGBLOB, subfolderloc VARCHAR(255), PRIMARY KEY (id) )"
-        mycursor.execute(sql)
+        add_retroarch = "CREATE TABLE IF NOT EXISTS retroarch (id INT NOT NULL AUTO_INCREMENT,filename VARCHAR(255), mtime DATETIME, file LONGBLOB, subfolder VARCHAR(255), PRIMARY KEY (id) )"
+        add_dolphin = "CREATE TABLE IF NOT EXISTS dolphin (id INT NOT NULL AUTO_INCREMENT,filename VARCHAR(255), mtime DATETIME, file LONGBLOB, subfolder VARCHAR(255), PRIMARY KEY (id) )"
+        mycursor.execute(add_retroarch)
+        mycursor.execute(add_dolphin)
         mydb.commit()
         print("----------------------------SETUP COMPLETE----------------------------")
         print("run main.py to sync your games")

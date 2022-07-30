@@ -67,10 +67,27 @@ class DB:
 
 
 class Retroarch(DB):
-    def sync_retroarch(self):
+    def sync(self):
         local_files = support.get_files(self.save_path)
         server_files = self.get_info_db()
         sync_exceptions = ["/Users/",]
+
+        outdated_local = support.list_of_outdated_saves(local_files,server_files)
+        for x in outdated_local:
+            if(x["subfolder"] not in sync_exceptions):
+                self.get_file_db(x["id"], x["subfolder"])
+        
+        outdated_server = support.list_of_outdated_saves(server_files,local_files)
+        for x in outdated_server:
+            if(x["subfolder"] not in sync_exceptions):
+                self.put_file_db(x["filename"], x["mtime"], x["subfolder"])
+
+
+class dolphin(DB):
+    def sync(self):
+        local_files = support.get_files(self.save_path)
+        server_files = self.get_info_db()
+        sync_exceptions = ["/",]
 
         outdated_local = support.list_of_outdated_saves(local_files,server_files)
         for x in outdated_local:
