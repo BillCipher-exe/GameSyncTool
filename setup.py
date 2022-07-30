@@ -41,7 +41,7 @@ try:
     )
     try:
         mycursor = mydb.cursor(dictionary=True, buffered=True)
-        sql = "CREATE TABLE IF NOT EXISTS retroarch (id INT NOT NULL AUTO_INCREMENT,filename VARCHAR(255), mtime DATETIME, file LONGBLOB, PRIMARY KEY (id) )"
+        sql = "CREATE TABLE IF NOT EXISTS retroarch (id INT NOT NULL AUTO_INCREMENT,filename VARCHAR(255), mtime DATETIME, file LONGBLOB, subfolderloc VARCHAR(255), PRIMARY KEY (id) )"
         mycursor.execute(sql)
         mydb.commit()
         print("----------------------------SETUP COMPLETE----------------------------")
