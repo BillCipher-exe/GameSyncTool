@@ -51,8 +51,6 @@ class DB:
         self.mycursor.execute(sql, val)
         myresult = self.mycursor.fetchone()
         path = self.save_path + myresult["subfolder"] + myresult["filename"]
-        #os.makedirs("/mnt/c/Users/hakan/Desktop/Programming/test/Retroarch/New folder/New folder")
-        #print("!!!!!!!!!!!!-----------"+self.save_path + myresult["subfolder"])
         if not os.path.isdir(self.save_path + myresult["subfolder"]):
             os.makedirs(self.save_path + myresult["subfolder"])
         file = open(path, "wb")
