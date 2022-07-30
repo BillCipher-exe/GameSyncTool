@@ -50,7 +50,6 @@ class DB:
         val = (id,)
         self.mycursor.execute(sql, val)
         myresult = self.mycursor.fetchone()
-        #path = os.path.join(self.save_path, myresult["filename"])
         path = self.save_path + myresult["subfolder"] + myresult["filename"]
         file = open(path, "wb")
         file.write(myresult["file"])
@@ -61,7 +60,6 @@ class DB:
 
     def get_info_db(self):
         sql = 'SELECT id, filename, mtime, subfolder FROM ' + self.table
-        #val = (self.table,)
         self.mycursor.execute(sql)
         return self.mycursor.fetchall()
 
