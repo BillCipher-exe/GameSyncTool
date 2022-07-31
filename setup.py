@@ -60,6 +60,8 @@ if choice == "y" or "Y":
     print("Enter full path to Savegame folder (.../Retroarch/saves):",end=" ")
     retroarch_path = input()
     config["path"]["retroarch_saves"] = retroarch_path
+else:
+    config["path"]["retroarch_saves"] = "none"
 
 print("Sync Dolphin (GameCube)? (Y/N) ",end=" ")
 choice = input()
@@ -67,6 +69,9 @@ if choice == "y" or "Y":
     print("Enter full path to Savegame folder (.../Dolphin Emulator/GC):",end=" ")
     dolpin_gc_path = input()
     config["path"]["dolphin_GC_saves"] = dolpin_gc_path
+else:
+    config["path"]["dolphin_GC_saves"] = "none"
+
 
 try:
     config_file = open("config.ini","w")
