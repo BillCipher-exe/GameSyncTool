@@ -83,7 +83,7 @@ class Retroarch(DB):
                 self.put_file_db(x["filename"], x["mtime"], x["subfolder"])
 
 
-class dolphin(DB):
+class Dolphin_GC(DB):
     def sync(self):
         local_files = support.get_files(self.save_path)
         server_files = self.get_info_db()
