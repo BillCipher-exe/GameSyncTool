@@ -27,7 +27,7 @@ def get_path_list(rootdir, path_list=[]):
 #get dict {filename, mtime, subfolder} of all files from rootdir with subfolder
 def get_files(rootdir):
     rootdir = rootdir.replace("\\",'/')
-    file_list = get_path_list(rootdir)
+    file_list = get_path_list(rootdir,[])
     files = []
     for path in file_list:
         path =  path.replace("\\",'/')
