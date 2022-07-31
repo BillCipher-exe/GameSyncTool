@@ -17,5 +17,5 @@ Requierments:
 
 free MySQL hosts:
 https://remotemysql.com/
-https://client.googiehost.com/
+https://googiehost.com/
 
