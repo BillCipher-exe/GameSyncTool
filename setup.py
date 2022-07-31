@@ -27,13 +27,7 @@ config["database"]["password"] = input()
 print("Input your MySQL Server database name: ",end=" ")
 config["database"]["db"] = input()
 
-try:
-    config_file = open("config.ini","w")
-    config.write(config_file)
-    config_file.close()
-except:
-    print("ERROR: could not write config file")
-    sys.exit(1)
+
 try:
     mydb = mysql.connector.connect(
         host=config["database"]["host"],
@@ -44,13 +38,12 @@ try:
     try:
         mycursor = mydb.cursor(dictionary=True, buffered=True)
         add_retroarch = "CREATE TABLE IF NOT EXISTS retroarch (id INT NOT NULL AUTO_INCREMENT,filename VARCHAR(255), mtime DATETIME, file LONGBLOB, subfolder VARCHAR(255), PRIMARY KEY (id) )"
-        add_dolphin = "CREATE TABLE IF NOT EXISTS dolphin (id INT NOT NULL AUTO_INCREMENT,filename VARCHAR(255), mtime DATETIME, file LONGBLOB, subfolder VARCHAR(255), PRIMARY KEY (id) )"
+        add_dolphin = "CREATE TABLE IF NOT EXISTS dolphin_GC (id INT NOT NULL AUTO_INCREMENT,filename VARCHAR(255), mtime DATETIME, file LONGBLOB, subfolder VARCHAR(255), PRIMARY KEY (id) )"
         mycursor.execute(add_retroarch)
         mycursor.execute(add_dolphin)
         mydb.commit()
-        print("----------------------------SETUP COMPLETE----------------------------")
-        print("run main.py to sync your games")
-        print("----------------------------------------------------------------------")
+        print("----------------------------MySQL DB connected----------------------------")
+        print("--------------------------------------------------------------------------")
     except:
         print("ERROR: could not create Table")
         sys.exit(1)
@@ -58,3 +51,27 @@ except:
     print("ERROR: no connection to MySQL DB")
     sys.exit(1)
 
+
+print("----------------------------Add Savegame Locations----------------------------")
+
+print("Sync Retroarch? (Y/N) ",end=" ")
+choice = input()
+if choice == "y" or "Y":
+    print("Enter full path to Savegame folder (.../Retroarch/saves):",end=" ")
+    retroarch_path = input()
+    config["path"]["retroarch_saves"] = retroarch_path
+
+print("Sync Dolphin (GameCube)? (Y/N) ",end=" ")
+choice = input()
+if choice == "y" or "Y":
+    print("Enter full path to Savegame folder (.../Dolphin Emulator/GC):",end=" ")
+    dolpin_gc_path = input()
+    config["path"]["dolphin_GC_saves"] = dolpin_gc_path
+
+try:
+    config_file = open("config.ini","w")
+    config.write(config_file)
+    config_file.close()
+except:
+    print("ERROR: could not write config file")
+    sys.exit(1)
