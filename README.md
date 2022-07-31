@@ -14,6 +14,7 @@ Tool for syncing Emulator savefiles to multiple devices via a MySQL DB
 ## Requierments:
 * Python3
 * pip3
+* MySQL server
 
 
 ## Free MySQL hosts:
