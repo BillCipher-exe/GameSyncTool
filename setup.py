@@ -2,9 +2,8 @@ import mysql.connector
 import subprocess
 import sys
 import configparser
-
 from pip import main
-
+from os import path
 
 def install(package):
     try:
@@ -17,7 +16,7 @@ install("mysql-connector-python")
 config = configparser.ConfigParser()
 config.read("config.ini")
 
-print("----------------------------SETUP-------------------------------")
+print("------------------------------------SETUP---------------------------------------")
 print("Input your MySQL Server host: ",end=" ")
 config["database"]["host"] = input()
 print("Input your MySQL Server user name: ",end=" ")
@@ -42,8 +41,8 @@ try:
         mycursor.execute(add_retroarch)
         mycursor.execute(add_dolphin)
         mydb.commit()
-        print("----------------------------MySQL DB connected----------------------------")
-        print("--------------------------------------------------------------------------")
+        print("-------------------------------MySQL DB connected-------------------------------")
+        print("--------------------------------------------------------------------------------")
     except:
         print("ERROR: could not create Table")
         sys.exit(1)
@@ -52,23 +51,31 @@ except:
     sys.exit(1)
 
 
-print("----------------------------Add Savegame Locations----------------------------")
+print("-----------------------------Add Savegame Locations-----------------------------")
 
-print("Sync Retroarch? (Y/N) ",end=" ")
+print("Sync Retroarch? (Y/N): ",end=" ")
 choice = input()
 if choice == "y" or "Y":
     print("Enter full path to Savegame folder (.../Retroarch/saves):",end=" ")
     retroarch_path = input()
-    config["path"]["retroarch_saves"] = retroarch_path
+    if path.basename(retroarch_path) == "saves":
+        config["path"]["retroarch_saves"] = retroarch_path
+    else:
+        print("unexpected path. Please enter the full path where the Retroarch savegames are Located for example (.../Retroarch/saves)")
+        config["path"]["retroarch_saves"] = "none"
 else:
     config["path"]["retroarch_saves"] = "none"
 
-print("Sync Dolphin (GameCube)? (Y/N) ",end=" ")
+print("Sync Dolphin (GameCube)? (Y/N): ",end=" ")
 choice = input()
 if choice == "y" or "Y":
     print("Enter full path to Savegame folder (.../Dolphin Emulator/GC):",end=" ")
     dolpin_gc_path = input()
-    config["path"]["dolphin_GC_saves"] = dolpin_gc_path
+    if path.basename(dolpin_gc_path) == "GC":
+        config["path"]["dolphin_GC_saves"] = dolpin_gc_path
+    else:
+        print("unexpected path. Please enter the full path where the Dolphin GC savegames are Located for example (.../Dolphin Emulator/GC)")
+        config["path"]["dolphin_GC_saves"] = "none"
 else:
     config["path"]["dolphin_GC_saves"] = "none"
 
@@ -80,3 +87,5 @@ try:
 except:
     print("ERROR: could not write config file")
     sys.exit(1)
+
+print("---------------------------------SETUP FINISHED--------------------------------")
