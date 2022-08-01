@@ -5,7 +5,6 @@ import sys
 
 
 class DB:
-
     def __init__(self, mysql_config, path, emulator):
         try:
             self.mysql_config = mysql_config
