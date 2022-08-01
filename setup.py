@@ -57,27 +57,36 @@ print("-----------------------------Add Savegame Locations----------------------
 
 print("Sync Retroarch? (Y/N): ", end=" ")
 choice = input()
-if choice == "y" or "Y":
-    print("Enter full path to Savegame folder (.../Retroarch/saves):", end=" ")
-    retroarch_path = input()
-    if path.basename(retroarch_path) == "saves":
-        config["path"]["retroarch_saves"] = retroarch_path
-    else:
-        print("unexpected path. Please enter the full path where the Retroarch savegames are Located for example (.../Retroarch/saves)")
-        config["path"]["retroarch_saves"] = "none"
+if choice == "y" or choice == "Y":
+    while True:
+        print("Enter full path to Savegame folder (.../Retroarch/saves):", end=" ")
+        retroarch_path = input()
+        if path.basename(retroarch_path) == "saves":
+            config["path"]["retroarch_saves"] = retroarch_path
+            break
+        else:
+            print("ERROR: Please enter the full path where the Retroarch savegames are Located (.../Retroarch/saves). try again (Y/N): ", end=" ")
+            choice = input()
+            config["path"]["retroarch_saves"] = "none"
+            if choice == "n" or choice == "N":
+                break
 else:
     config["path"]["retroarch_saves"] = "none"
 
 print("Sync Dolphin (GameCube)? (Y/N): ", end=" ")
 choice = input()
-if choice == "y" or "Y":
-    print("Enter full path to Savegame folder (.../Dolphin Emulator/GC):", end=" ")
-    dolpin_gc_path = input()
-    if path.basename(dolpin_gc_path) == "GC":
-        config["path"]["dolphin_GC_saves"] = dolpin_gc_path
-    else:
-        print("unexpected path. Please enter the full path where the Dolphin GC savegames are Located for example (.../Dolphin Emulator/GC)")
-        config["path"]["dolphin_GC_saves"] = "none"
+if choice == "y" or choice == "Y":
+    while True:
+        print("Enter full path to Savegame folder (.../Dolphin Emulator/GC):", end=" ")
+        dolpin_gc_path = input()
+        if path.basename(dolpin_gc_path) == "GC":
+            config["path"]["dolphin_GC_saves"] = dolpin_gc_path
+            break
+        else:
+            print("unexpected path. Please enter the full path where the Dolphin GC savegames are Located (.../Dolphin Emulator/GC). try again (Y/N): ", end=" ")
+            config["path"]["dolphin_GC_saves"] = "none"
+            if choice == "n" or choice == "N":
+                break
 else:
     config["path"]["dolphin_GC_saves"] = "none"
 
