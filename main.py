@@ -5,11 +5,13 @@ config = configparser.ConfigParser()
 config.read("config.ini")
 
 if config["path"]["retroarch_saves"] != "none":
-    retroarch = db.Retroarch(
-        config["database"], config["path"]["retroarch_saves"], "retroarch")
+    exceptions = ["/Users/", ]
+    retroarch = db.DB(
+        config["database"], config["path"]["retroarch_saves"], "retroarch",exceptions)
     retroarch.sync()
 
 if config["path"]["dolphin_gc_saves"] != "none":
-    dolphin_GC = db.Dolphin_GC(
-        config["database"], config["path"]["dolphin_gc_saves"], "dolphin_GC")
+    exceptions = ["/", ]
+    dolphin_GC = db.DB(
+        config["database"], config["path"]["dolphin_gc_saves"], "dolphin_GC",exceptions)
     dolphin_GC.sync()

@@ -5,11 +5,12 @@ import sys
 
 
 class DB:
-    def __init__(self, mysql_config, path, emulator):
+    def __init__(self, mysql_config, path, emulator, sync_exceptions = []):
         try:
             self.mysql_config = mysql_config
             self.save_path = path
             self.emulator = emulator
+            self.sync_exceptions= sync_exceptions
             self.mydb = mysql.connector.connect(
                 host=mysql_config["host"],
                 user=mysql_config["user"],
@@ -65,7 +66,7 @@ class DB:
         self.mycursor.execute(sql, val)
         return self.mycursor.fetchall()
 
-    def _sync(self, sync_exceptions = []):
+    def sync(self):
         local_files = support.get_files(self.save_path)
         server_files = self.get_info_db()
         sync_exceptions = ["/Users/", ]
@@ -81,18 +82,3 @@ class DB:
         for x in outdated_server:
             if(x["subfolder"] not in sync_exceptions):
                 self.put_file_db(x["filename"], x["mtime"], x["subfolder"])
-
-
-
-class Retroarch(DB):
-    exceptions = ["/Users/", ]
-    def sync(self):
-        self._sync(self.exceptions)
-    
-
-
-
-class Dolphin_GC(DB):
-    exceptions = ["/", ]
-    def sync(self):
-        self._sync(self.exceptions)
