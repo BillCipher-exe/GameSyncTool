@@ -1,7 +1,1 @@
-CREATE TABLE retroarch (
-    id INT NOT NULL AUTO_INCREMENT,
-    filename VARCHAR(255),
-    mtime DATETIME,
-    file LONGBLOB,
-    PRIMARY KEY (id)
-);
+CREATE TABLE IF NOT EXISTS savegame (id INT NOT NULL AUTO_INCREMENT,filename VARCHAR(255), mtime DATETIME, file LONGBLOB, subfolder VARCHAR(255), emulator VARCHAR(255), PRIMARY KEY (id) ) 
