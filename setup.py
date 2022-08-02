@@ -14,6 +14,24 @@ def install(package):
         print("ERROR: Could not install Python Package. Check if pip3 is installed")
         sys.exit(1)
 
+def add_emulator(emulator, example_path,config_name):
+    print("Sync "+emulator+" ? (Y/N): ", end=" ")
+    choice = input()
+    if choice == "y" or choice == "Y":
+        while True:
+            print("Enter full path to Savegame folder ("+example_path+"):", end=" ")
+            path_input = input()
+            if path.basename(path_input) == path.basename(example_path) and path.isdir(path_input):
+                config["path"][config_name] = path_input
+                break
+            else:
+                print("ERROR: Please enter the full path where the "+emulator+" savegames are Located ("+example_path+"). try again (Y/N): ", end=" ")
+                choice = input()
+                config["path"][config_name] = "none"
+                if choice == "n" or choice == "N":
+                    break
+    else:
+        config["path"][config_name] = "none"
 
 install("mysql-connector-python")
 
@@ -55,41 +73,8 @@ except:
 
 print("-----------------------------Add Savegame Locations-----------------------------")
 
-print("Sync Retroarch? (Y/N): ", end=" ")
-choice = input()
-if choice == "y" or choice == "Y":
-    while True:
-        print("Enter full path to Savegame folder (.../Retroarch/saves):", end=" ")
-        retroarch_path = input()
-        if path.basename(retroarch_path) == "saves" and path.isdir(retroarch_path):
-            config["path"]["retroarch_saves"] = retroarch_path
-            break
-        else:
-            print("ERROR: Please enter the full path where the Retroarch savegames are Located (.../Retroarch/saves). try again (Y/N): ", end=" ")
-            choice = input()
-            config["path"]["retroarch_saves"] = "none"
-            if choice == "n" or choice == "N":
-                break
-else:
-    config["path"]["retroarch_saves"] = "none"
-
-print("Sync Dolphin (GameCube)? (Y/N): ", end=" ")
-choice = input()
-if choice == "y" or choice == "Y":
-    while True:
-        print("Enter full path to Savegame folder (.../Dolphin Emulator/GC):", end=" ")
-        dolpin_gc_path = input()
-        if path.basename(dolpin_gc_path) == "GC" and path.isdir(dolpin_gc_path):
-            config["path"]["dolphin_GC_saves"] = dolpin_gc_path
-            break
-        else:
-            print("ERROR: Please enter the full path where the Dolphin GC savegames are Located (.../Dolphin Emulator/GC). try again (Y/N): ", end=" ")
-            config["path"]["dolphin_GC_saves"] = "none"
-            choice = input()
-            if choice == "n" or choice == "N":
-                break
-else:
-    config["path"]["dolphin_GC_saves"] = "none"
+add_emulator("Retroarch",".../Retroarch/saves","retroarch_saves")
+add_emulator("Dolphin GameCube",".../Dolphin/GC","dolphin_gc_saves")
 
 
 try:
