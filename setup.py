@@ -61,7 +61,7 @@ if choice == "y" or choice == "Y":
     while True:
         print("Enter full path to Savegame folder (.../Retroarch/saves):", end=" ")
         retroarch_path = input()
-        if path.basename(retroarch_path) == "saves":
+        if path.basename(retroarch_path) == "saves" and path.isdir(retroarch_path):
             config["path"]["retroarch_saves"] = retroarch_path
             break
         else:
@@ -79,12 +79,13 @@ if choice == "y" or choice == "Y":
     while True:
         print("Enter full path to Savegame folder (.../Dolphin Emulator/GC):", end=" ")
         dolpin_gc_path = input()
-        if path.basename(dolpin_gc_path) == "GC":
+        if path.basename(dolpin_gc_path) == "GC" and path.isdir(dolpin_gc_path):
             config["path"]["dolphin_GC_saves"] = dolpin_gc_path
             break
         else:
-            print("unexpected path. Please enter the full path where the Dolphin GC savegames are Located (.../Dolphin Emulator/GC). try again (Y/N): ", end=" ")
+            print("ERROR: Please enter the full path where the Dolphin GC savegames are Located (.../Dolphin Emulator/GC). try again (Y/N): ", end=" ")
             config["path"]["dolphin_GC_saves"] = "none"
+            choice = input()
             if choice == "n" or choice == "N":
                 break
 else:
