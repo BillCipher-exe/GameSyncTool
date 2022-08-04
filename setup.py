@@ -75,6 +75,7 @@ print("-----------------------------Add Savegame Locations----------------------
 
 add_emulator("Retroarch",".../Retroarch/saves","retroarch_saves")
 add_emulator("Dolphin GameCube",".../Dolphin/GC","dolphin_gc_saves")
+add_emulator("PCSX2",".../PCSX2/memcards","pcsx_saves")
 
 
 try:
