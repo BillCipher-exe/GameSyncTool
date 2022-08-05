@@ -1,12 +1,12 @@
 import db
 import configparser
 
+
 config = configparser.ConfigParser()
 config.read("config.ini")
 
 if config["path"]["retroarch_saves"] != "none":
-
-    exceptions = ["/User/Config/","/User/Logs/","/User/Wii/","/User/Wii/tmp/","/User/Wii/sys/"]
+    exceptions = ["/User/*","/PSP/SYSTEM/*","/PSP/PPSSPP_STATE/*"]
     retroarch = db.DB(
         config["database"], config["path"]["retroarch_saves"], "retroarch",exceptions)
     retroarch.sync()

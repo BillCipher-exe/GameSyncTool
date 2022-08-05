@@ -2,7 +2,7 @@ from os import listdir
 from os.path import isfile, join
 from datetime import datetime
 import os
-
+import fnmatch
 
 
 # get list ot file_path without subfolder
@@ -49,6 +49,11 @@ def get_mtime(path):
     mtime = os.path.getmtime(path)
     date_t = datetime.fromtimestamp(mtime)
     return date_t.replace(microsecond=0)
+
+def check_exception(subfolder, pattern):
+    for p in pattern:
+        if fnmatch.fnmatch(subfolder, p):
+            return True
 
 
 #compare list of savesgames from source1 to source2 (local storage / Database)
