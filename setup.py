@@ -1,18 +1,17 @@
 import mysql.connector
-import subprocess
 import sys
 import configparser
-from pip import main
 from os import path
+#from pip import main
+#import subprocess
 
-
-def install(package):
-    try:
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", package])
-    except:
-        print("ERROR: Could not install Python Package. Check if pip3 is installed")
-        sys.exit(1)
+#def install(package):
+#    try:
+#        subprocess.check_call(
+#            [sys.executable, "-m", "pip", "install", package])
+#    except:
+#        print("ERROR: Could not install Python Package. Check if pip3 is installed")
+#        sys.exit(1)
 
 def add_emulator(emulator, example_path,config_name):
     print("Sync "+emulator+" ? (Y/N): ", end=" ")
@@ -33,7 +32,7 @@ def add_emulator(emulator, example_path,config_name):
     else:
         config["path"][config_name] = "none"
 
-install("mysql-connector-python")
+#install("mysql-connector-python")
 
 config = configparser.ConfigParser()
 config.read("config.ini")
